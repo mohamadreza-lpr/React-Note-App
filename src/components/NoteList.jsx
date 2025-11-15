@@ -1,8 +1,11 @@
 import React from "react";
 
-function NoteList({ noteLists }) {
-    console.log("noteLists", noteLists);
-
+function NoteList({ noteLists, onRemoveNote, onComplete }) {
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
     return (
         <div className="note-container">
             <div className="note-status">
@@ -13,22 +16,41 @@ function NoteList({ noteLists }) {
                 <p>Open</p>
                 <span>0</span>
             </div>
-            {noteLists.map((n) => {
-                return (
-                    <div key={n.id} className="note-item">
-                        <div className="note-item__header">
-                            <div>
-                                <h3> {n.title}</h3>
-                                <p className="desc">{n.description}</p>
+            {noteLists.length > 0 ? (
+                noteLists.map((n) => {
+                    return (
+                        <div key={n.id} className="note-item">
+                            <div className="note-item__header">
+                                <div className={n.completed ? "note-item completed" : ""}>
+                                    <h3 className={n.completed ? "title" : ""}> {n.title}</h3>
+                                    <p className="desc">{n.description}</p>
+                                </div>
+                                <div className="actions">
+                                    <button
+                                        className="trash"
+                                        onClick={() => {
+                                            onRemoveNote(n);
+                                        }}
+                                    >
+                                        ❌
+                                    </button>
+                                    <input
+                                        type="checkbox"
+                                        name="subscribe"
+                                        value={n.completed}
+                                        onChange={() => {
+                                            onComplete(n);
+                                        }}
+                                    />
+                                </div>
                             </div>
-                            <div className="actions">
-                                <div className="trash">trash</div>
-                                <input type="checkbox" name="subscribe" value="yes" />
-                            </div>
+                            <div className="note-item__footer">{new Date(n.created_at).toLocaleDateString("en-US", options)}</div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })
+            ) : (
+                <div>No note available</div>
+            )}
         </div>
     );
 }

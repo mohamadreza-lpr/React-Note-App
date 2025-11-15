@@ -10,6 +10,8 @@ function AddNote({ onAddNote }) {
             title: title,
             description: description,
             id: new Date(),
+            created_at: new Date().toISOString(),
+            completed: false,
         };
         onAddNote(data);
         setTitle("");

@@ -9,9 +9,22 @@ function App() {
     const [noteLists, setNoteLists] = useState([]);
     const addNoteHandler = (newNote) => {
         setNoteLists((prev) => [...prev, newNote]);
-        console.log("AA", noteLists);
     };
-
+    const removeNote = (note) => {
+        setNoteLists((prev) => {
+            return prev.filter((item) => item.id !== note.id);
+        });
+    };
+    const noteCompleteHandler = (note) => {
+        let updatedNotes = noteLists.map((item) => {
+            if (item.id == note.id) {
+                item.completed = !item.completed;
+            }
+            return item;
+        });
+        console.log(updatedNotes);
+        setNoteLists(updatedNotes);
+    };
     return (
         <>
             <div className="note-header">
@@ -23,7 +36,7 @@ function App() {
             </div>
             <div className="note-app">
                 <AddNote onAddNote={addNoteHandler} />
-                <NoteList noteLists={noteLists} />
+                <NoteList noteLists={noteLists} onRemoveNote={removeNote} onComplete={noteCompleteHandler} />
             </div>
         </>
     );
