@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import AddNote from "./components/AddNote";
 import NoteList from "./components/NoteList";
+import NoteStatus from "./components/NoteStatus";
 
 function App() {
     const [noteLists, setNoteLists] = useState([]);
@@ -22,11 +23,10 @@ function App() {
             }
             return item;
         });
-        console.log(updatedNotes);
         setNoteLists(updatedNotes);
     };
     return (
-        <>
+        <div className="container">
             <div className="note-header">
                 <h1>My Notes</h1>
                 <select id="fruit" name="fruit">
@@ -36,9 +36,12 @@ function App() {
             </div>
             <div className="note-app">
                 <AddNote onAddNote={addNoteHandler} />
-                <NoteList noteLists={noteLists} onRemoveNote={removeNote} onComplete={noteCompleteHandler} />
+                <div className="note-container">
+                    <NoteStatus notes={noteLists} />
+                    <NoteList noteLists={noteLists} onRemoveNote={removeNote} onComplete={noteCompleteHandler} />
+                </div>
             </div>
-        </>
+        </div>
     );
 }
 

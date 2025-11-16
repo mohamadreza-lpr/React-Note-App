@@ -7,15 +7,7 @@ function NoteList({ noteLists, onRemoveNote, onComplete }) {
         day: "numeric",
     };
     return (
-        <div className="note-container">
-            <div className="note-status">
-                <p>All</p>
-                <span> 0</span>
-                <p>Completed</p>
-                <span>0</span>
-                <p>Open</p>
-                <span>0</span>
-            </div>
+        <>
             {noteLists.length > 0 ? (
                 noteLists.map((n) => {
                     return (
@@ -51,7 +43,7 @@ function NoteList({ noteLists, onRemoveNote, onComplete }) {
             ) : (
                 <div>No note available</div>
             )}
-        </div>
+        </>
     );
 }
 
